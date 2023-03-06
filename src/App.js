@@ -1,15 +1,19 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import DisplayPage from './Components/DisplayPage'
-import MainPage from './Components/MainPage'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { increment,decrement } from './features/Slice';
 
 function App() {
+  const data = useSelector(state=>state.mySliceKey); 
+  const dispatch = useDispatch();
+  const [custom,setCustom]= useState();
   return (
     <>
-      <Routes>
-        <Route path='/' element={<MainPage/>}></Route>
-        <Route path='/display' element={<DisplayPage/>}></Route>
-      </Routes>
+      <h1>Counter Redux Example</h1>
+      <h3>Value : {data.value}</h3>
+      <input placeholder='Enter custom Value' onChange={(e)=>{setCustom(e.target.value)
+      }}></input>
+      <button onClick={()=>{dispatch(increment(custom))}}>+</button>
+      <button onClick={()=>{dispatch(decrement(custom))}}>-</button>
     </>
   )
 }
